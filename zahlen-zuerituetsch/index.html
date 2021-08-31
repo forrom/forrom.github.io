@@ -44,19 +44,7 @@
         }
 
     </style>
-</head>
-<body>⚙
-    <div id="main">
-        <div id="number">39</div>
-        <div id="text" onmouseenter="peek()" onmouseleave="unpeek()">👀</div>
-        <button id="next" onclick="next()">Los!</button>
-    </div>
-</body>
-
-<script
-src="https://code.jquery.com/jquery-3.6.0.js"
-integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-crossorigin="anonymous"></script>
+    
 <script>
     function next() {
         const nextNr = Math.floor(Math.random() * 100);
@@ -101,4 +89,17 @@ crossorigin="anonymous"></script>
         return [ones_text, joiner, tens_names[tens]].join('·');
     }
 </script>
+</head>
+<body>⚙
+    <div id="main">
+        <div id="number">39</div>
+        <div id="text" onmouseenter="peek()" onmouseleave="unpeek()">👀</div>
+        <button id="next" onclick="next()">Los!</button>
+    </div>
+</body>
+
+<script
+src="https://code.jquery.com/jquery-3.6.0.js"
+integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+crossorigin="anonymous"></script>
 </html>
