@@ -61,13 +61,21 @@ crossorigin="anonymous"></script>
 
     function peek() {
         $('#text').text(toText(lastNr));
+        peeking = true;
     }
 
     function unpeek() {
         $('#text').text('👀');
+        peeking = false;
+    }
+
+    function togglePeek() {
+        console.log('yo')
+        peeking ? unpeek() : peek();
     }
 
     var lastNr;
+    var peeking = false;
     const ones_names = ['null', 'ein', 'zwei', 'drü', 'vier', 'foif', 'sächs', 'sibe', 'acht', 'nüün'];
     const tens_names = [null, 'zäh', 'zwänzg', 'drissg', 'vierzg', 'füfzg', 'sächzg', 'sibezg', 'achzg', 'nüünzg'];
     function toText(number) {
@@ -99,7 +107,7 @@ crossorigin="anonymous"></script>
 <body>
     <div id="main">
         <div id="number">39</div>
-        <div id="text" onmouseenter="peek()" onmouseleave="unpeek()">👀</div>
+        <div id="text" onmouseenter="peek()" onmouseleave="unpeek()" onclick="togglePeek()">👀</div>
         <button id="next" onclick="next()">Los!</button>
     </div>
 </body>
