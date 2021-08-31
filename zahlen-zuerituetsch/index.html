@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zahle Züritüütsch</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            font-size: xx-large;
+            color: #101010;
+        }
+        #main * {
+            width: 200px;
+            text-align: center;
+            margin: 35px auto;
+            display: flex;
+            justify-content: center;
+        }
+        #text {
+            height: 1.5em;
+        }
+        #next {
+            background: none;
+            color: inherit;
+            border: none;
+            padding: 0;
+            font: inherit;
+            cursor: pointer;
+            outline: inherit;
+            border: 3px  #979797 solid;
+            color: #505050;
+            border-radius: 2px;
+            margin: 50px auto;
+            text-align: center;
+        }
+        #next:hover {
+            border: 3px  #5e5e5e solid;
+            color: inherit;
+        }
+
+    </style>
+</head>
+<body>⚙
+    <div id="main">
+        <div id="number">39</div>
+        <div id="text" onmouseenter="peek()" onmouseleave="unpeek()">👀</div>
+        <button id="next" onclick="next()">Los!</button>
+    </div>
+</body>
+
+<script
+src="https://code.jquery.com/jquery-3.6.0.js"
+integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+crossorigin="anonymous"></script>
+<script>
+    function next() {
+        const nextNr = Math.floor(Math.random() * 100);
+        $('#number').text(nextNr);
+        lastNr = nextNr;
+    }
+
+    function peek() {
+        $('#text').text(toText(lastNr));
+    }
+
+    function unpeek() {
+        $('#text').text('👀');
+    }
+
+    var lastNr;
+    next();
+    const ones_names = ['null', 'ein', 'zwei', 'drü', 'vier', 'foif', 'sächs', 'sibe', 'acht', 'nüün'];
+    const tens_names = [null, 'zäh', 'zwänzg', 'drissg', 'vierzg', 'füfzg', 'sächzg', 'sibezg', 'achzg', 'nüünzg'];
+    function toText(number) {
+        if (number < 0) throw "negative input=" + number;
+        if (number == 1) return 'eis';
+        if (number < 10) return ones_names[number];
+        if (number == 11) return 'elf';
+        if (number == 12) return 'zwölf';
+        if (number == 13) return 'drizäh';
+        if (number == 15) return 'füfzäh';
+        if (number == 16) return 'sächzäh';
+
+        const ones = number % 10;
+        const tens = Math.floor(number / 10);
+        const joiner = tens == 8 
+            ? 'ed'
+            : 'e';
+        
+        const ones_text = ones == 7 
+            ? 'siben'
+            : ones_names[ones];
+
+        if (ones == 0) return tens_names[tens];
+        if (number < 20) return [ones_names[ones], tens_names[tens]].join('·');
+        return [ones_text, joiner, tens_names[tens]].join('·');
+    }
+</script>
+</html>
