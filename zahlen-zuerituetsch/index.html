@@ -57,6 +57,7 @@ crossorigin="anonymous"></script>
         const nextNr = Math.floor(Math.random() * 100);
         $('#number').text(nextNr);
         lastNr = nextNr;
+        peeking = false;
     }
 
     function peek() {
@@ -70,7 +71,6 @@ crossorigin="anonymous"></script>
     }
 
     function togglePeek() {
-        console.log('yo')
         peeking ? unpeek() : peek();
     }
 
@@ -107,7 +107,7 @@ crossorigin="anonymous"></script>
 <body>
     <div id="main">
         <div id="number">39</div>
-        <div id="text" onmouseenter="peek()" onmouseleave="unpeek()" onclick="togglePeek()">👀</div>
+        <div id="text" onmouseenter="peek()" onmouseleave="unpeek()" onclick="$.debounce(50, togglePeek)">👀</div>
         <button id="next" onclick="next()">Los!</button>
     </div>
 </body>
