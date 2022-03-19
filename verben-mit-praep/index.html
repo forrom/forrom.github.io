@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zahle Züritüütsch</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            font-size: xx-large;
+            color: #101010;
+        }
+        #main {
+            margin-top: 50px;
+        }
+        #main * {
+            width: 400px;
+            text-align: center;
+            margin: 35px auto;
+            display: flex;
+            justify-content: center;
+        }
+        #solution {
+            height: 1.5em;
+        }
+        #next {
+            background: none;
+            color: inherit;
+            border: none;
+            padding: 0;
+            font: inherit;
+            cursor: pointer;
+            outline: inherit;
+            border: 3px  #979797 solid;
+            color: #505050;
+            border-radius: 2px;
+            margin: 50px auto;
+            text-align: center;
+        }
+        #next:hover {
+            border: 3px  #5e5e5e solid;
+            color: inherit;
+        }
+
+        .case-D {
+            background-color: lightcoral;
+        }
+
+        .case-A {
+            background-color: rgb(155, 235, 181);
+        }
+
+    </style>
+    
+<script
+src="https://code.jquery.com/jquery-3.6.0.js"
+integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+crossorigin="anonymous"></script>
+<script>
+    function next() {
+        const nextNr = Math.floor(Math.random() * verbs.length);
+        lastVerb = verbs[nextNr];
+        $('#verb').text(lastVerb.verb + ' (' + lastVerb.level + ')');
+        unpeek();
+    }
+
+    function peek() {
+        $('#solution').text(lastVerb.preposition + ' +' + lastVerb.case);
+        $('#solution').addClass('case-'+lastVerb.case)
+        peeking = true;
+    }
+
+    function unpeek() {
+        $('#solution').text('👀');
+        $('#solution').removeClass('case-'+lastVerb.case)
+        peeking = false;
+    }
+
+    function togglePeek() {
+        peeking ? unpeek() : peek();
+    }
+
+    const verbs = [		{verb:"anfangen", preposition:"mit", case:"D", level:"A1"},
+		{verb:"arbeiten", preposition:"bei", case:"D", level:"A1"},
+		{verb:"arbeiten", preposition:"für", case:"A", level:"A1"},
+		{verb:"beginnen", preposition:"mit", case:"D", level:"A1"},
+		{verb:"einladen", preposition:"zu", case:"D", level:"A1"},
+		{verb:"informieren", preposition:"über", case:"A", level:"A1"},
+		{verb:"sich interessieren", preposition:"für", case:"A", level:"A1"},
+		{verb:"spielen", preposition:"mit", case:"D", level:"A1"},
+		{verb:"sprechen", preposition:"mit", case:"D", level:"A1"},
+		{verb:"sprechen", preposition:"über", case:"A", level:"A1"},
+		{verb:"reden", preposition:"mit", case:"D", level:"A1"},
+		{verb:"reden", preposition:"über", case:"A", level:"A1"},
+		{verb:"sich treffen", preposition:"mit", case:"D", level:"A1"},
+
+		{verb:"antworten", preposition:"auf", case:"A", level:"A2"},
+		{verb:"aufhören", preposition:"mit", case:"D", level:"A2"},
+		{verb:"sich bedanken", preposition:"bei", case:"D", level:"A2"},
+		{verb:"bitten", preposition:"um", case:"A", level:"A2"},
+		{verb:"danken", preposition:"für", case:"A", level:"A2"},
+		{verb:"denken", preposition:"an", case:"A", level:"A2"},
+		{verb:"einladen", preposition:"auf", case:"A", level:"A2"},
+		{verb:"enden", preposition:"mit", case:"D", level:"A2"},
+		{verb:"sich entscheiden", preposition:"für", case:"A", level:"A2"},
+		{verb:"sich entscheiden", preposition:"gegen", case:"A", level:"A2"},
+		{verb:"sich entschuldigen", preposition:"für", case:"A", level:"A2"},
+		{verb:"sich erinnern", preposition:"an", case:"A", level:"A2"},
+		{verb:"fragen", preposition:"nach", case:"D", level:"A2"},
+		{verb:"sich freuen", preposition:"auf", case:"A", level:"A2"},
+		{verb:"sich freuen", preposition:"über", case:"A", level:"A2"},
+		{verb:"gewinnen", preposition:"gegen", case:"A", level:"A2"},
+		{verb:"gratulieren", preposition:"zu", case:"D", level:"A2"},
+		{verb:"helfen", preposition:"bei", case:"D", level:"A2"},
+		{verb:"sich informieren", preposition:"bei", case:"D", level:"A2"},
+		{verb:"mitmachen", preposition:"bei", case:"D", level:"A2"},
+		{verb:"schreiben", preposition:"über", case:"A", level:"A2"},
+		{verb:"sein", preposition:"für", case:"A", level:"A2"},
+		{verb:"sein", preposition:"gegen", case:"A", level:"A2"},
+		{verb:"teilnehmen", preposition:"an", case:"D", level:"A2"},
+		{verb:"sich unterhalten", preposition:"mit", case:"D", level:"A2"},
+		{verb:"sich unterhalten", preposition:"über", case:"A", level:"A2"},
+		{verb:"sich verabreden", preposition:"mit", case:"D", level:"A2"},
+		{verb:"sich verlieben", preposition:"in", case:"A", level:"A2"},
+		{verb:"warten", preposition:"auf", case:"A", level:"A2"},
+		{verb:"zugucken", preposition:"bei", case:"D", level:"A2"},
+		{verb:"zuschauen", preposition:"bei", case:"D", level:"A2"},
+		{verb:"zusehen", preposition:"bei", case:"D", level:"A2"},
+
+		{verb:"abhängen", preposition:"von", case:"D", level:"B1"},
+		{verb:"abschreiben", preposition:"von", case:"D", level:"B1"},
+		{verb:"ändern", preposition:"an", case:"D", level:"B1"},
+		{verb:"ankommen", preposition:"auf", case:"A", level:"B1"},
+		{verb:"anmerken", preposition:"zu", case:"D", level:"B1"},
+		{verb:"arbeiten", preposition:"an", case:"D", level:"B1"},
+		{verb:"sich ärgern", preposition:"über", case:"A", level:"B1"},
+		{verb:"aufpassen", preposition:"auf", case:"A", level:"B1"},
+		{verb:"ausgeben", preposition:"für", case:"A", level:"B1"},
+		{verb:"sich ausruhen", preposition:"von", case:"D", level:"B1"},
+		{verb:"basieren", preposition:"auf", case:"D", level:"B1"},
+		{verb:"beauftragen", preposition:" mit", case:"D", level:"B1"},
+		{verb:"sich bedanken", preposition:"für", case:"A", level:"B1"},
+		{verb:"beglückwünschen", preposition:"zu", case:"D", level:"B1"},
+		{verb:"beitragen", preposition:"zu", case:"D", level:"B1"},
+		{verb:"berichten", preposition:"über", case:"A", level:"B1"},
+		{verb:"berichten", preposition:"von", case:"D", level:"B1"},
+		{verb:"sich beschäftigen", preposition:"mit", case:"D", level:"B1"},
+		{verb:"Bescheid wissen", preposition:"über", case:"A", level:"B1"},
+		{verb:"sich beschweren", preposition:"bei", case:"D", level:"B1"},
+		{verb:"sich beschweren", preposition:"über", case:"A", level:"B1"},
+		{verb:"bestehen", preposition:"aus", case:"D", level:"B1"},
+		{verb:"sich beteiligen", preposition:"an", case:"D", level:"B1"},
+		{verb:"sich bewerben", preposition:"um", case:"A", level:"B1"},
+		{verb:"sich beziehen", preposition:"auf", case:"A", level:"B1"},
+		{verb:"bringen", preposition:"auf", case:"A", level:"B1"},
+		{verb:"bringen", preposition:"zu", case:"D", level:"B1"},
+		{verb:"demonstrieren", preposition:"für", case:"A", level:"B1"},
+		{verb:"demonstrieren", preposition:"gegen", case:"A", level:"B1"},
+		{verb:"diskutieren", preposition:"mit", case:"D", level:"B1"},
+		{verb:"diskutieren", preposition:"über", case:"A", level:"B1"},
+		{verb:"sich einigen", preposition:"mit", case:"D", level:"B1"},
+		{verb:"sich entschließen", preposition:"zu", case:"D", level:"B1"},
+		{verb:"erfahren", preposition:"von", case:"D", level:"B1"},
+		{verb:"sich erhöhen", preposition:"auf", case:"A", level:"B1"},
+		{verb:"sich erhöhen", preposition:"um", case:"A", level:"B1"},
+		{verb:"sich erholen", preposition:"von", case:"D", level:"B1"},
+		{verb:"erkennen", preposition:"an", case:"D", level:"B1"},
+		{verb:"sich erkundigen", preposition:"bei", case:"D", level:"B1"},
+		{verb:"sich erkundigen", preposition:"nach", case:"D", level:"B1"},
+		{verb:"erzählen", preposition:"von", case:"D", level:"B1"},
+		{verb:"erziehen", preposition:"zu", case:"D", level:"B1"},
+		{verb:"fehlen", preposition:"an (es)", case:"D", level:"B1"},
+		{verb:"fliehen", preposition:"vor", case:"D", level:"B1"},
+		{verb:"sich fürchten", preposition:"vor", case:"D", level:"B1"},
+		{verb:"gehen", preposition:"um (es)", case:"A", level:"B1"},
+		{verb:"gehören", preposition:"zu", case:"D", level:"B1"},
+		{verb:"sich gewöhnen", preposition:"an", case:"A", level:"B1"},
+		{verb:"glauben", preposition:"an", case:"A", level:"B1"},
+		{verb:"halten", preposition:"von", case:"D", level:"B1"},
+		{verb:"handeln", preposition:"gegen", case:"A", level:"B1"},
+		{verb:"handeln", preposition:"mit", case:"D", level:"B1"},
+		{verb:"sich handeln", preposition:"um", case:"A", level:"B1"},
+		{verb:"sich handeln", preposition:"von", case:"D", level:"B1"},
+		{verb:"hinweisen", preposition:"auf", case:"A", level:"B1"},
+		{verb:"hören", preposition:"auf", case:"A", level:"B1"},
+		{verb:"hören", preposition:"von", case:"D", level:"B1"},
+		{verb:"kämpfen", preposition:"für", case:"A", level:"B1"},
+		{verb:"kämpfen", preposition:"gegen", case:"A", level:"B1"},
+		{verb:"kommen", preposition:"auf", case:"A", level:"B1"},
+		{verb:"sich kümmern", preposition:"um", case:"A", level:"B1"},
+		{verb:"lachen", preposition:"über", case:"A", level:"B1"},
+		{verb:"leben", preposition:"von", case:"D", level:"B1"},
+		{verb:"liegen", preposition:"an", case:"D", level:"B1"},
+		{verb:"machen", preposition:"aus", case:"D", level:"B1"},
+		{verb:"nachdenken", preposition:"über", case:"A", level:"B1"},
+		{verb:"sich orientieren", preposition:"an", case:"D", level:"B1"},
+		{verb:"passen", preposition:" zu", case:"D", level:"B1"},
+		{verb:"protestieren", preposition:"gegen", case:"A", level:"B1"},
+		{verb:"raten", preposition:"zu", case:"D", level:"B1"},
+		{verb:"reagieren", preposition:"auf", case:"A", level:"B1"},
+		{verb:"rechnen", preposition:"mit", case:"D", level:"B1"},
+		{verb:"reden", preposition:"von", case:"D", level:"B1"},
+		{verb:"riechen", preposition:"nach", case:"D", level:"B1"},
+		{verb:"sagen", preposition:"über", case:"A", level:"B1"},
+		{verb:"sagen", preposition:"von", case:"D", level:"B1"},
+		{verb:"sagen", preposition:"zu", case:"D", level:"B1"},
+		{verb:"schicken", preposition:"an", case:"A", level:"B1"},
+		{verb:"schicken", preposition:"zu", case:"D", level:"B1"},
+		{verb:"schimpfen", preposition:"mit", case:"D", level:"B1"},
+		{verb:"schimpfen", preposition:"über", case:"A", level:"B1"},
+		{verb:"schließen", preposition:"aus", case:"D", level:"B1"},
+		{verb:"schmecken", preposition:"nach", case:"D", level:"B1"},
+		{verb:"schreiben", preposition:"an", case:"A", level:"B1"},
+		{verb:"schreiben", preposition:"von", case:"D", level:"B1"},
+		{verb:"sich schützen", preposition:"vor", case:"D", level:"B1"},
+		{verb:"senden", preposition:"an", case:"A", level:"B1"},
+		{verb:"siegen", preposition:"über", case:"A", level:"B1"},
+		{verb:"sinken", preposition:"auf", case:"A", level:"B1"},
+		{verb:"sorgen", preposition:"für", case:"A", level:"B1"},
+		{verb:"sich sorgen", preposition:"um", case:"A", level:"B1"},
+		{verb:"sich spezialisieren", preposition:"auf", case:"A", level:"B1"},
+		{verb:"sprechen", preposition:"für", case:"A", level:"B1"},
+		{verb:"sprechen", preposition:"gegen", case:"A", level:"B1"},
+		{verb:"sprechen", preposition:"von", case:"D", level:"B1"},
+		{verb:"steigen", preposition:"auf", case:"A", level:"B1"},
+		{verb:"sterben", preposition:"an", case:"D", level:"B1"},
+		{verb:"stimmen", preposition:"für", case:"A", level:"B1"},
+		{verb:"stimmen", preposition:"gegen", case:"A", level:"B1"},
+		{verb:"stören", preposition:"bei", case:"D", level:"B1"},
+		{verb:"sich streiten", preposition:"mit", case:"D", level:"B1"},
+		{verb:"sich streiten", preposition:"um", case:"A", level:"B1"},
+		{verb:"suchen", preposition:"nach", case:"D", level:"B1"},
+		{verb:"teilen", preposition:"in", case:"A", level:"B1"},
+		{verb:"träumen", preposition:"von", case:"D", level:"B1"},
+		{verb:"sich trennen", preposition:"von", case:"D", level:"B1"},
+		{verb:"treten", preposition:"gegen", case:"A", level:"B1"},
+		{verb:"überreden", preposition:"zu", case:"D", level:"B1"},
+		{verb:"übersetzen", preposition:"in", case:"A", level:"B1"},
+		{verb:"übersetzten", preposition:"aus", case:"D", level:"B1"},
+		{verb:"sich überzeugen", preposition:"von", case:"D", level:"B1"},
+		{verb:"unterrichten", preposition:"in", case:"D", level:"B1"},
+		{verb:"unterscheiden", preposition:"zwischen", case:"D", level:"B1"},
+		{verb:"unterstützen", preposition:"bei", case:"D", level:"B1"},
+		{verb:"sich verabreden", preposition:"zu", case:"D", level:"B1"},
+		{verb:"vereinbaren", preposition:"mit", case:"D", level:"B1"},
+		{verb:"verlangen", preposition:"von", case:"D", level:"B1"},
+		{verb:"sich verlassen", preposition:"auf", case:"A", level:"B1"},
+		{verb:"verschieben", preposition:"auf", case:"A", level:"B1"},
+		{verb:"sich verstecken", preposition:"vor", case:"D", level:"B1"},
+		{verb:"sich verstehen", preposition:"mit", case:"D", level:"B1"},
+		{verb:"nichts/etwas verstehen", preposition:"von", case:"D", level:"B1"},
+		{verb:"sich verteidigen", preposition:"gegen", case:"A", level:"B1"},
+		{verb:"verwenden", preposition:"zu", case:"D", level:"B1"},
+		{verb:"warnen", preposition:"vor", case:"D", level:"B1"},
+		{verb:"sich wehren", preposition:"gegen", case:"A", level:"B1"},
+		{verb:"weinen", preposition:"über", case:"A", level:"B1"},
+		{verb:"werben", preposition:"für", case:"A", level:"B1"},
+		{verb:"sich wundern", preposition:"über", case:"A", level:"B1"},
+		{verb:"zählen", preposition:"zu", case:"D", level:"B1"},
+		{verb:"zusammenstoßen", preposition:"mit", case:"D", level:"B1"},
+		{verb:"zweifeln", preposition:"an", case:"D", level:"B1"},
+
+		{verb:"sich ablenken", preposition:"von", case:"D", level:"B2"},
+		{verb:"achten", preposition:"auf", case:"A", level:"B2"},
+		{verb:"sich ängstigen", preposition:"um", case:"A", level:"B2"},
+		{verb:"sich ängstigen", preposition:"vor", case:"D", level:"B2"},
+		{verb:"sich anpassen", preposition:"an", case:"A", level:"B2"},
+		{verb:"antreten", preposition:"gegen", case:"A", level:"B2"},
+		{verb:"sich aufregen", preposition:"über", case:"A", level:"B2"},
+		{verb:"aufrufen", preposition:"zu", case:"D", level:"B2"},
+		{verb:"sich austauschen", preposition:"mit", case:"D", level:"B2"},
+		{verb:"sich befassen", preposition:"mit", case:"D", level:"B2"},
+		{verb:"sich befreien", preposition:"von", case:"D", level:"B2"},
+		{verb:"sich begeistern", preposition:"für", case:"A", level:"B2"},
+		{verb:"sich beklagen", preposition:"bei", case:"D", level:"B2"},
+		{verb:"sich beklagen", preposition:"über", case:"A", level:"B2"},
+		{verb:"sich belaufen", preposition:"auf", case:"A", level:"B2"},
+		{verb:"sich bemühen", preposition:"um", case:"A", level:"B2"},
+		{verb:"beneiden ", preposition:"um ", case:"A", level:"B2"},
+		{verb:"bestehen", preposition:"auf", case:"D", level:"B2"},
+		{verb:"bestehen", preposition:"in", case:"D", level:"B2"},
+		{verb:"bestimmen", preposition:"zu", case:"D", level:"B2"},
+		{verb:"betrügen", preposition:"um", case:"A", level:"B2"},
+		{verb:"betteln", preposition:"um", case:"A", level:"B2"},
+		{verb:"beurteilen", preposition:"nach", case:"D", level:"B2"},
+		{verb:"bewegen", preposition:"zu", case:"D", level:"B2"},
+		{verb:"dienen", preposition:"zu", case:"D", level:"B2"},
+		{verb:"sich distanzieren", preposition:"von", case:"D", level:"B2"},
+		{verb:"sich drehen", preposition:"um", case:"A", level:"B2"},
+		{verb:"duften", preposition:"nach", case:"D", level:"B2"},
+		{verb:"eingehen", preposition:"auf", case:"A", level:"B2"},
+		{verb:"sich einigen", preposition:"auf", case:"A", level:"B2"},
+		{verb:"sich einsetzen", preposition:"für", case:"A", level:"B2"},
+		{verb:"eintreten", preposition:"für", case:"A", level:"B2"},
+		{verb:"sich ekeln", preposition:"vor", case:"D", level:"B2"},
+		{verb:"sich engagieren", preposition:"für", case:"A", level:"B2"},
+		{verb:"entschädigen", preposition:"für", case:"A", level:"B2"},
+		{verb:"sich erfreuen", preposition:"an", case:"D", level:"B2"},
+		{verb:"sich ergeben", preposition:"aus", case:"D", level:"B2"},
+		{verb:"erkranken", preposition:"an", case:"D", level:"B2"},
+		{verb:"ermutigen", preposition:"zu", case:"D", level:"B2"},
+		{verb:"sich ernähren", preposition:"von", case:"D", level:"B2"},
+		{verb:"sich erschrecken", preposition:"über", case:"A", level:"B2"},
+		{verb:"erwarten", preposition:"von", case:"D", level:"B2"},
+		{verb:"experimentieren", preposition:"mit", case:"D", level:"B2"},
+		{verb:"folgern", preposition:"aus", case:"D", level:"B2"},
+		{verb:"führen", preposition:"zu", case:"D", level:"B2"},
+		{verb:"geraten", preposition:"in", case:"A", level:"B2"},
+		{verb:"gewinnen", preposition:"an", case:"D", level:"B2"},
+		{verb:"greifen", preposition:"nach", case:"D", level:"B2"},
+		{verb:"sich halten", preposition:"an", case:"A", level:"B2"},
+		{verb:"sich halten", preposition:"für", case:"A", level:"B2"},
+		{verb:"halten", preposition:"zu", case:"D", level:"B2"},
+		{verb:"herausfordern", preposition:"zu", case:"D", level:"B2"},
+		{verb:"herrschen", preposition:"über", case:"A", level:"B2"},
+		{verb:"hindern", preposition:"an", case:"D", level:"B2"},
+		{verb:"hoffen", preposition:"auf", case:"A", level:"B2"},
+		{verb:"investieren", preposition:"in", case:"A", level:"B2"},
+		{verb:"sich irren", preposition:"in", case:"D", level:"B2"},
+		{verb:"jubeln", preposition:"über", case:"A", level:"B2"},
+		{verb:"kämpfen", preposition:"mit", case:"D", level:"B2"},
+		{verb:"kämpfen", preposition:"um", case:"A", level:"B2"},
+		{verb:"klagen", preposition:"über", case:"A", level:"B2"},
+		{verb:"kommen", preposition:"zu", case:"D", level:"B2"},
+		{verb:"sich konzentrieren", preposition:"auf", case:"A", level:"B2"},
+		{verb:"leiden", preposition:"an", case:"D", level:"B2"},
+		{verb:"leiden", preposition:"unter", case:"D", level:"B2"},
+		{verb:"liefern", preposition:"an", case:"A", level:"B2"},
+		{verb:"sich machen", preposition:"an", case:"A", level:"B2"},
+		{verb:"mangeln", preposition:"an", case:"D", level:"B2"},
+		{verb:"mitwirken", preposition:"an", case:"D", level:"B2"},
+		{verb:"mitwirken", preposition:"bei", case:"D", level:"B2"},
+		{verb:"multiplizieren", preposition:"mit", case:"D", level:"B2"},
+		{verb:"philosophieren", preposition:"über", case:"A", level:"B2"},
+		{verb:"sich rächen", preposition:"an", case:"D", level:"B2"},
+		{verb:"sich rächen", preposition:"für", case:"A", level:"B2"},
+		{verb:"rechnen", preposition:"zu", case:"D", level:"B2"},
+		{verb:"sich richten", preposition:"an", case:"A", level:"B2"},
+		{verb:"rufen", preposition:"nach", case:"D", level:"B2"},
+		{verb:"ruhen", preposition:"auf", case:"D", level:"B2"},
+		{verb:"sich schämen", preposition:"für", case:"A", level:"B2"},
+		{verb:"sich schämen", preposition:"vor", case:"D", level:"B2"},
+		{verb:"schießen", preposition:"auf", case:"A", level:"B2"},
+		{verb:"schimpfen", preposition:"auf", case:"A", level:"B2"},
+		{verb:"sich schlagen", preposition:"mit", case:"D", level:"B2"},
+		{verb:"schreiben", preposition:"an", case:"D", level:"B2"},
+		{verb:"sich sehnen", preposition:"nach", case:"D", level:"B2"},
+		{verb:"siegen", preposition:"gegen", case:"A", level:"B2"},
+		{verb:"spielen", preposition:"um", case:"A", level:"B2"},
+		{verb:"stehen", preposition:"auf", case:"A", level:"B2"},
+		{verb:"stehen", preposition:"für", case:"A", level:"B2"},
+		{verb:"stehen", preposition:"unter", case:"D", level:"B2"},
+		{verb:"sich steigern", preposition:"um", case:"A", level:"B2"},
+		{verb:"stinken", preposition:"nach", case:"D", level:"B2"},
+		{verb:"stoßen", preposition:"gegen", case:"A", level:"B2"},
+		{verb:"sich täuschen", preposition:"in", case:"D", level:"B2"},
+		{verb:"teilhaben", preposition:"an", case:"D", level:"B2"},
+		{verb:"tun haben", preposition:"mit", case:"D", level:"B2"},
+		{verb:"sich üben", preposition:"in", case:"D", level:"B2"},
+		{verb:"übertreffen", preposition:"in", case:"D", level:"B2"},
+		{verb:"umgehen", preposition:"mit", case:"D", level:"B2"},
+		{verb:"umwandeln", preposition:"in", case:"A", level:"B2"},
+		{verb:"sich unterscheiden", preposition:"von", case:"D", level:"B2"},
+		{verb:"urteilen", preposition:"nach", case:"D", level:"B2"},
+		{verb:"urteilen", preposition:"über", case:"A", level:"B2"},
+		{verb:"veranlassen", preposition:"zu", case:"D", level:"B2"},
+		{verb:"verfügen", preposition:"über", case:"A", level:"B2"},
+		{verb:"verführen", preposition:"zu", case:"D", level:"B2"},
+		{verb:"sich verpflichten", preposition:"zu", case:"D", level:"B2"},
+		{verb:"sich verringern", preposition:"um", case:"A", level:"B2"},
+		{verb:"verstehen", preposition:"unter", case:"D", level:"B2"},
+		{verb:"verstoßen", preposition:"gegen", case:"A", level:"B2"},
+		{verb:"sich vertiefen", preposition:"in", case:"A", level:"B2"},
+		{verb:"sich vertragen", preposition:"mit", case:"D", level:"B2"},
+		{verb:"verurteilen", preposition:"für", case:"A", level:"B2"},
+		{verb:"sich verwandeln", preposition:"in", case:"A", level:"B2"},
+		{verb:"verwechseln", preposition:"mit", case:"D", level:"B2"},
+		{verb:"verwenden", preposition:"für", case:"A", level:"B2"},
+		{verb:"verzichten", preposition:"auf", case:"A", level:"B2"},
+		{verb:"wählen", preposition:"zu", case:"D", level:"B2"},
+		{verb:"sich wenden", preposition:"an", case:"A", level:"B2"},
+		{verb:"werben", preposition:"um", case:"A", level:"B2"},
+		{verb:"werden", preposition:"zu", case:"D", level:"B2"},
+		{verb:"wetten", preposition:"um", case:"A", level:"B2"},
+		{verb:"wissen", preposition:"um", case:"A", level:"B2"},
+		{verb:"zugehen", preposition:"auf", case:"A", level:"B2"},
+		{verb:"zurückkommen", preposition:"auf", case:"A", level:"B2"},
+		{verb:"zwingen", preposition:"zu", case:"D", level:"B2"},
+
+		{verb:"absehen", preposition:"von", case:"D", level:"C1"},
+		{verb:"abwenden", preposition:"von", case:"von", level:"C1"},
+		{verb:"anhalten", preposition:"zu", case:"D", level:"C1"},
+		{verb:"anspielen", preposition:"auf", case:"A", level:"C1"},
+		{verb:"appellieren", preposition:"an", case:"A", level:"C1"},
+		{verb:"ausbrechen", preposition:"in", case:"A", level:"C1"},
+		{verb:"sich austauschen", preposition:"über", case:"A", level:"C1"},
+		{verb:"sich begnügen", preposition:"mit", case:"D", level:"C1"},
+		{verb:"beharren", preposition:"auf", case:"D", level:"C1"},
+		{verb:"sich berufen", preposition:"auf", case:"A", level:"C1"},
+		{verb:"beruhen", preposition:"auf", case:"D", level:"C1"},
+		{verb:"sich beschränken", preposition:"auf", case:"A", level:"C1"},
+		{verb:"drängen", preposition:"zu", case:"D", level:"C1"},
+		{verb:"sich eignen", preposition:"für", case:"A", level:"C1"},
+		{verb:"sich einlassen", preposition:"auf", case:"A", level:"C1"},
+		{verb:"sich einstellen", preposition:"auf", case:"A", level:"C1"},
+		{verb:"einwilligen", preposition:"in", case:"A", level:"C1"},
+		{verb:"ermahnen", preposition:"zu", case:"D", level:"C1"},
+		{verb:"sich erregen", preposition:"über", case:"A", level:"C1"},
+		{verb:"ersehen", preposition:"aus", case:"D", level:"C1"},
+		{verb:"fahnden", preposition:"nach", case:"D", level:"C1"},
+		{verb:"forschen", preposition:"an", case:"D", level:"C1"},
+		{verb:"forschen", preposition:"nach", case:"D", level:"C1"},
+		{verb:"sich fügen", preposition:"in", case:"A", level:"C1"},
+		{verb:"geradestehen", preposition:"für", case:"A", level:"C1"},
+		{verb:"sich hüten", preposition:"vor", case:"D", level:"C1"},
+		{verb:"jammern", preposition:"über", case:"A", level:"C1"},
+		{verb:"loskommen", preposition:"von", case:"D", level:"C1"},
+		{verb:"neigen", preposition:"zu", case:"D", level:"C1"},
+		{verb:"resultieren", preposition:"aus", case:"D", level:"C1"},
+		{verb:"sich richten", preposition:"auf", case:"A", level:"C1"},
+		{verb:"sich richten", preposition:"nach", case:"D", level:"C1"},
+		{verb:"sich", preposition:"schlagen", case:"um", level:"A"},
+		{verb:"schwören", preposition:"auf", case:"A", level:"C1"},
+		{verb:"spotten", preposition:"über", case:"A", level:"C1"},
+		{verb:"streben", preposition:"nach", case:"D", level:"C1"},
+		{verb:"sich unterscheiden", preposition:"nach", case:"D", level:"C1"},
+		{verb:"verheiraten", preposition:"mit", case:"D", level:"C1"},
+		{verb:"verlangen", preposition:"nach", case:"D", level:"C1"},
+		{verb:"verleiten", preposition:"zu", case:"D", level:"C1"},
+		{verb:"sich vermindern", preposition:"um", case:"A", level:"C1"},
+		{verb:"vermitteln", preposition:"zwischen", case:"D", level:"C1"},
+		{verb:"vertrauen", preposition:"auf", case:"A", level:"C1"},
+		{verb:"wirken", preposition:"auf", case:"A", level:"C1"},
+		{verb:"zählen", preposition:"auf", case:"A", level:"C1"},
+		{verb:"zögern", preposition:"bei", case:"D", level:"C1"},
+		{verb:"zögern", preposition:"mit", case:"D", level:"C1"},
+		{verb:"zunehmen", preposition:"an", case:"D", level:"C1"},
+		
+		{verb:"sich besinnen", preposition:"auf", case:"A", level:"C2"},
+		{verb:"drängen", preposition:"auf", case:"A", level:"C2"},
+		{verb:"sich entrüsten", preposition:"über", case:"A", level:"C2"},
+		{verb:"grauen", preposition:"vor (es)", case:"D", level:"C2"},
+		{verb:"referieren", preposition:"über", case:"A", level:"C2"},
+		{verb:"sich sträuben", preposition:"gegen", case:"A", level:"C2"},
+		{verb:"taugen", preposition:"zu", case:"D", level:"C2"},
+		{verb:"tendieren", preposition:"zu", case:"D", level:"C2"},
+		{verb:"sich verwenden", preposition:"für", case:"A", level:"C2"},
+    ]
+
+    var lastVerb;
+    var peeking = false;
+</script>
+</head>
+<body>
+    <div id="main">
+        <div id="verb"></div> 
+        <div id="solution" onmouseenter="peek()" onmouseleave="unpeek()" onclick="togglePeek()">👀
+        </div>
+        <button id="next" onclick="next()">Los!</button>
+    </div>
+</body>
+<script>
+    next();
+</script>
+</html>
